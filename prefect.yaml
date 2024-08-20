@@ -17,7 +17,7 @@ pull:
 - prefect.deployments.steps.git_clone:
     repository: https://github.com/uni-3/prefect.git
     branch: main
-    credentials: '{{ prefect.blocks.github-credentials.github-credentials-block }}'
+    credentials: "{{ prefect.blocks.github-credentials.github-credentials-block }}"
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:

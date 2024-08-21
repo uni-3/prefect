@@ -1,5 +1,5 @@
 #pandas
-airbyte>16.0.0
+airbyte>=0.16.0
 prefect>=2.0.0
 prefect_dbt
 #python-dotenv

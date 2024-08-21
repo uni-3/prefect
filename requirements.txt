@@ -1,0 +1,5 @@
+pandas
+airbyte
+prefect>=2.0.0
+prefect_dbt
+python-dotenv

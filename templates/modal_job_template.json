@@ -90,7 +90,6 @@
                 "title": "Pip Packages",
                 "default": [
                     "prefect>=2.0.0",
-                    "airbyte",
                     "prefect_dbt",
                     "pandas"
                 ],
@@ -170,7 +169,7 @@
                         "type": "string",
                         "title": "Tag",
                         "example": "docker.io/prefecthq/prefect:2-latest",
-                        "default": "docker.io/prefecthq/prefect:2-python3.11",
+                        "default": "docker.io/uni3san/modal-run:latest",
                         "description": "The URL for the image tag."
                     }
                 },

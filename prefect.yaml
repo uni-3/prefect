@@ -19,6 +19,9 @@ pull:
     branch: main
     #credentials: "{{ prefect.blocks.github-credentials.github-credentials-block }}"
     access_token: "{{ prefect.blocks.secret.uni3-github-access-token }}"
+- prefect.deployments.steps.pip_install_requirements:
+    directory: {{ clone-step.directory }}  # `clone-step` is a user-provided `id` field
+    requirements_file: requirements.txt
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
@@ -43,5 +46,7 @@ deployments:
   work_pool:
     name: modal
     work_queue_name:
-    job_variables: {}
+    job_variables: 
+      image: "docker.io/uni3san/modal-run"
+      #image: "docker.io/prefecthq/prefect:2-python3.11"
   schedules: []

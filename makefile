@@ -9,3 +9,9 @@ create-block:
 
 update-modal:
 	uv run prefect work-pool update modal --base-job-template ./templates/modal_job_template.json
+
+docker-push:
+	docker push uni3san/modal-run:latest
+
+docker-build:
+	docker build . -t uni3san/modal-run:latest

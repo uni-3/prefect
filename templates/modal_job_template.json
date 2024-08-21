@@ -88,11 +88,6 @@
                     "type": "string"
                 },
                 "title": "Pip Packages",
-                "default": [
-                    "prefect>=2.0.0",
-                    "prefect_dbt",
-                    "pandas"
-                ],
                 "example": [
                     "prefect>=2.0.0",
                     "marvin"

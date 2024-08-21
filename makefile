@@ -6,3 +6,6 @@ register-duckdb:
 
 create-block:
 	prefect block create duckdb-connector # -n LOCAL_DB
+
+update-modal:
+	uv run prefect work-pool update modal --base-job-template ./templates/modal_job_template.json

@@ -18,7 +18,7 @@ pull:
     repository: https://github.com/uni-3/prefect.git
     branch: main
     #credentials: "{{ prefect.blocks.github-credentials.github-credentials-block }}"
-    credentials: "{{ prefect.blocks.secret.uni3-github-access-token }}"
+    access_token: "{{ prefect.blocks.secret.uni3-github-access-token }}"
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:

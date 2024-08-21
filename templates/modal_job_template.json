@@ -1,0 +1,247 @@
+{
+    "variables": {
+        "type": "object",
+        "required": [
+            "modal_credentials"
+        ],
+        "properties": {
+            "cpu": {
+                "type": "number",
+                "title": "CPU",
+                "format": "float",
+                "default": 1,
+                "example": 1,
+                "multipleOf": 0.25,
+                "description": "Minimum amount of CPU the sandbox should be allocated (in cores)."
+            },
+            "env": {
+                "type": "object",
+                "title": "Environment Variables",
+                "default": {
+                    "DUCKDB_DATABASE": "data/staging/data.duckdb"
+                },
+                "example": {
+                    "MY_ENV_VAR": "my-value"
+                },
+                "description": "Environment variables to set.",
+                "additionalProperties": {
+                    "type": "string"
+                }
+            },
+            "gpu": {
+                "type": "string",
+                "title": "GPU",
+                "example": "A10G",
+                "description": "Optional configuration for [GPU accelerator](https://modal.com/docs/reference/modal.gpu) to attach."
+            },
+            "image": {
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/PublicRegistry"
+                    },
+                    {
+                        "$ref": "#/definitions/PrivateRegistry"
+                    },
+                    {
+                        "$ref": "#/definitions/AWSRegistry"
+                    },
+                    {
+                        "$ref": "#/definitions/GCPRegistry"
+                    }
+                ],
+                "title": "Image",
+                "description": "Base image to use for sandbox. Defaults to the latest Prefect image."
+            },
+            "memory": {
+                "type": "integer",
+                "title": "Memory",
+                "default": 512,
+                "example": 1024,
+                "description": "Minimum amount of memory the sandbox should be allocated (in MB)."
+            },
+            "command": {
+                "type": "string",
+                "title": "Command",
+                "description": "The command to use when starting a flow run. In most cases, this should be left blank and the command will be automatically generated."
+            },
+            "secrets": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "title": "Secrets",
+                "example": [
+                    "modal-secret-1",
+                    "modal-secret-2"
+                ],
+                "description": "A list of named [secrets](https://modal.com/secrets) defined in Modal to inject into the sandbox."
+            },
+            "timeout": {
+                "type": "integer",
+                "title": "Timeout",
+                "default": 300,
+                "description": "Timeout in seconds before the sandbox is killed."
+            },
+            "pip_packages": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "title": "Pip Packages",
+                "default": [
+                    "prefect>=2.0.2",
+                    "airbyte",
+                    "dotenv",
+                    "dbt",
+                    "duckdb",
+                    "prefect_dbt",
+                    "pandas"
+                ],
+                "example": [
+                    "prefect>=2.0.0",
+                    "marvin"
+                ],
+                "description": "A list of python packages to install in the sandbox."
+            },
+            "modal_credentials": {
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/ModalCredentials"
+                    }
+                ],
+                "title": "Modal Credentials",
+                "default": {
+                    "$ref": {
+                        "block_document_id": "f82eae7c-4a6d-4202-bbbb-6874171d492d"
+                    }
+                },
+                "description": "The credentials to use to authenticate with Modal."
+            }
+        },
+        "definitions": {
+            "AWSRegistry": {
+                "type": "object",
+                "title": "AWS Elastic Container Registry",
+                "required": [
+                    "tag",
+                    "aws_secret"
+                ],
+                "properties": {
+                    "tag": {
+                        "type": "string",
+                        "title": "Tag",
+                        "example": "000000000000.dkr.ecr.us-east-1.amazonaws.com/my-private-registry:my-version",
+                        "description": "The URL for the image tag."
+                    },
+                    "aws_secret": {
+                        "type": "string",
+                        "title": "Secret",
+                        "example": "my-modal-secret",
+                        "description": "The name of the [secret](https://modal.com/secrets/create) defined in Modal to access the image in AWS. Secret should include the keys `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_REGION`."
+                    }
+                },
+                "description": "Image available via a private registry."
+            },
+            "GCPRegistry": {
+                "type": "object",
+                "title": "GCP Artifact Registry",
+                "required": [
+                    "tag",
+                    "gcp_secret"
+                ],
+                "properties": {
+                    "tag": {
+                        "type": "string",
+                        "title": "Tag",
+                        "example": "us-east1-docker.pkg.dev/my-project-1234/my-repo/my-image:my-version",
+                        "description": "The URL for the image tag."
+                    },
+                    "gcp_secret": {
+                        "type": "string",
+                        "title": "Secret",
+                        "example": "my-modal-secret",
+                        "description": "The name of the [secret](https://modal.com/secrets/create) defined in Modal to access the image in GCP. Secret should include the key `SERVICE_ACCOUNT_JSON`."
+                    }
+                },
+                "description": "Image available via a private registry."
+            },
+            "PublicRegistry": {
+                "type": "object",
+                "title": "Public Registry",
+                "properties": {
+                    "tag": {
+                        "type": "string",
+                        "title": "Tag",
+                        "example": "docker.io/prefecthq/prefect:2-latest",
+                        "description": "The URL for the image tag."
+                    }
+                },
+                "description": "Image available via a public registry such as docker.io."
+            },
+            "PrivateRegistry": {
+                "type": "object",
+                "title": "Private Registry",
+                "required": [
+                    "tag",
+                    "secret"
+                ],
+                "properties": {
+                    "tag": {
+                        "type": "string",
+                        "title": "Tag",
+                        "example": "docker.io/prefecthq/prefect:2-latest",
+                        "description": "The URL for the image tag."
+                    },
+                    "secret": {
+                        "type": "string",
+                        "title": "Secret",
+                        "example": "my-modal-secret",
+                        "description": "The name of the [secret](https://modal.com/secrets/create) defined in Modal to access the private repository. Secret should include the keys `REGISTRY_USERNAME` and `REGISTRY_PASSWORD`."
+                    }
+                },
+                "description": "Image available via a private registry."
+            },
+            "ModalCredentials": {
+                "type": "object",
+                "title": "ModalCredentials",
+                "required": [
+                    "token_id",
+                    "token_secret"
+                ],
+                "properties": {
+                    "token_id": {
+                        "type": "string",
+                        "title": "Token Id",
+                        "description": "Token Id for Modal."
+                    },
+                    "token_secret": {
+                        "type": "string",
+                        "title": "Token Secret",
+                        "format": "password",
+                        "writeOnly": true,
+                        "description": "Token Secret for Modal"
+                    }
+                },
+                "description": "Block used to manage Modal Credentials.",
+                "secret_fields": [
+                    "token_secret"
+                ],
+                "block_type_slug": "modal-credentials",
+                "block_schema_references": {}
+            }
+        },
+        "description": "Variables for a Modal flow run."
+    },
+    "job_configuration": {
+        "cpu": "{{ cpu }}",
+        "env": "{{ env }}",
+        "gpu": "{{ gpu }}",
+        "image": "{{ image }}",
+        "memory": "{{ memory }}",
+        "command": "{{ command }}",
+        "secrets": "{{ secrets }}",
+        "timeout": "{{ timeout }}",
+        "pip_packages": "{{ pip_packages }}",
+        "modal_credentials": "{{ modal_credentials }}"
+    }
+}

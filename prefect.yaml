@@ -46,7 +46,7 @@ deployments:
   work_pool:
     name: modal
     work_queue_name:
-    job_variables: 
-      image: "docker.io/uni3san/modal-run"
+    job_variables: {}
+      #image: "docker.io/uni3san/modal-run"
       #image: "docker.io/prefecthq/prefect:2-python3.11"
   schedules: []

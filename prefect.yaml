@@ -14,14 +14,15 @@ push:
 
 # pull section allows you to provide instructions for cloning this project in remote locations
 pull:
-- prefect.deployments.steps.git_clone:
-    repository: https://github.com/uni-3/prefect.git
-    branch: main
-    #credentials: "{{ prefect.blocks.github-credentials.github-credentials-block }}"
-    access_token: "{{ prefect.blocks.secret.uni3-github-access-token }}"
-- prefect.deployments.steps.pip_install_requirements:
-    directory: {{ clone-step.directory }}  # `clone-step` is a user-provided `id` field
-    requirements_file: requirements.txt
+    - prefect.deployments.steps.git_clone:
+        id: clone-step
+        repository: https://github.com/uni-3/prefect.git
+        branch: main
+        #credentials: "{{ prefect.blocks.github-credentials.github-credentials-block }}"
+        access_token: "{{ prefect.blocks.secret.uni3-github-access-token }}"
+    - prefect.deployments.steps.pip_install_requirements:
+        directory: "{{ clone-step.directory }}"
+        requirements_file: requirements.txt
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:

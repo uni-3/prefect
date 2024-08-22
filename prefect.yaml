@@ -26,17 +26,17 @@ pull:
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-- name:
+- name: on-prefect
   version:
   tags: []
   description:
   schedule: {}
-  flow_name:
-  entrypoint:
+  flow_name: github issues
+  entrypoint: main.py:main_flow
   parameters: {}
   work_pool:
-    name: modal
-    work_queue_name:
+    name: on-prefect
+    work_queue_name: primary-queue
     job_variables: {}
 - name: modal-test
   version:

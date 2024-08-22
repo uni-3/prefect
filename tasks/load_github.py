@@ -1,4 +1,5 @@
-import airbyte as ab
+#import airbyte as ab
+from airbyte import get_source as  ab_get_source
 from prefect import task
 import pandas as pd
 
@@ -35,7 +36,7 @@ def github_issues(connector, cache):
 
 def load_gihtub_issues(repo_name: str, stream_name: str, cache) -> pd.DataFrame:
     # load from github
-    source = ab.get_source(
+    source = ab_get_source(
         "source-github",
         install_if_missing=True,
         config={

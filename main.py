@@ -1,7 +1,8 @@
 import requests
 from prefect import flow, task, Flow, get_run_logger
 from prefect.blocks.system import Secret
-import airbyte as ab
+#import airbyte as ab
+from airbyte import caches as  ab_caches
 import dotenv
 
 from datetime import timedelta
@@ -28,7 +29,7 @@ def main_flow():
     # local
     ##cache = ab.get_default_cache()
     # prod
-    cache = ab.caches.MotherDuckCache(
+    cache = ab_caches.MotherDuckCache(
         api_key=motherduck_token
     )
     #cache = ab.DuckDBCache(db_path=f"md:?motherduck_token={motherduck_token}")

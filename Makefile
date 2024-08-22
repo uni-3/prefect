@@ -15,3 +15,6 @@ docker-push:
 
 docker-build:
 	docker build . -t uni3san/modal-run:latest
+
+docker-login:
+	docker login

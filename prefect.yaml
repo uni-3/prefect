@@ -14,15 +14,17 @@ push:
 
 # pull section allows you to provide instructions for cloning this project in remote locations
 pull:
-    - prefect.deployments.steps.git_clone:
-        id: clone-step
-        repository: https://github.com/uni-3/prefect.git
-        branch: main
-        #credentials: "{{ prefect.blocks.github-credentials.github-credentials-block }}"
-        access_token: "{{ prefect.blocks.secret.uni3-github-access-token }}"
-    - prefect.deployments.steps.pip_install_requirements:
-        directory: "{{ clone-step.directory }}"
-        requirements_file: requirements.txt
+- prefect.deployments.steps.git_clone:
+    id: clone-step
+    repository: https://github.com/uni-3/prefect.git
+    branch: main
+    #credentials: "{{ prefect.blocks.github-credentials.github-credentials-block }}"
+    access_token: "{{ prefect.blocks.secret.uni3-github-access-token }}"
+- prefect.deployments.steps.pip_install_requirements:
+    directory: "{{ clone-step.directory }}"
+    requirements_file: requirements.txt
+# - prefect.deployments.steps.set_working_directory:
+#     directory: "/opt/prefect/"
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
@@ -37,7 +39,8 @@ deployments:
   work_pool:
     name: on-prefect
     work_queue_name: primary-queue
-    job_variables: {}
+    job_variables: 
+      finished_job_ttl: 30
 - name: modal-test
   version:
   tags: []
@@ -47,7 +50,9 @@ deployments:
   work_pool:
     name: modal
     work_queue_name:
-    job_variables: {}
-      #image: "docker.io/uni3san/modal-run"
+    job_variables:
+      image:
+        tag: "docker.io/uni3san/modal-run"
+      finished_job_ttl: 30
       #image: "docker.io/prefecthq/prefect:2-python3.11"
   schedules: []

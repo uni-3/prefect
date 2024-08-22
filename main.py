@@ -30,7 +30,9 @@ def main_flow():
     ##cache = ab.get_default_cache()
     # prod
     cache = ab_caches.MotherDuckCache(
-        api_key=motherduck_token
+        api_key=motherduck_token,
+        database="my_db",
+        schema_name="cache"
     )
     #cache = ab.DuckDBCache(db_path=f"md:?motherduck_token={motherduck_token}")
     print("start load")

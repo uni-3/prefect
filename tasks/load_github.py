@@ -1,11 +1,11 @@
 #import airbyte as ab
-from airbyte import get_source as  ab_get_source
+from airbyte import get_source, get_secret
 from prefect import task
 import pandas as pd
 
 from prefect.blocks.system import Secret
 
-github_access_token = ab.get_secret("GITHUB_PERSONAL_ACCESS_TOKEN")
+github_access_token = get_secret("GITHUB_PERSONAL_ACCESS_TOKEN")
 if not github_access_token:
     secret_block = Secret.load("github-personal-access-token")
     github_access_token = secret_block.get()
@@ -21,10 +21,13 @@ def github_issues(connector, cache):
     result = load_gihtub_issues(repo_name, stream_name, cache)
 
     table_name = "issues"
-    schema_name = "staging"
+    schema_name = "main"
     # to duckdbはschema指定が有効でない
     # result.to_sql(table_name, conn, schema="source", if_exists='append', index=False)
     # or
+    if result is None:
+        return {"table_name": None, "row_count": 0}
+
     with connector as conn:
         conn.execute(f"CREATE TABLE IF NOT EXISTS {schema_name}.{table_name} AS SELECT * FROM result")
         #conn.execute(f"CREATE TABLE IF NOT EXISTS {table_name} AS SELECT * FROM result")
@@ -34,9 +37,9 @@ def github_issues(connector, cache):
     return res
 
 
-def load_gihtub_issues(repo_name: str, stream_name: str, cache) -> pd.DataFrame:
+def load_gihtub_issues(repo_name: str, stream_name: str, cache) -> pd.DataFrame | None:
     # load from github
-    source = ab_get_source(
+    source = get_source(
         "source-github",
         install_if_missing=True,
         config={
@@ -55,4 +58,6 @@ def load_gihtub_issues(repo_name: str, stream_name: str, cache) -> pd.DataFrame:
     source.select_streams([stream_name])
 
     result = source.read(cache=cache)
+    if result is None:
+        return
     return result.cache[stream_name].to_pandas()

@@ -41,19 +41,23 @@ def main_flow():
 
 
 if __name__ == "__main__":
-    main_flow.from_source(
-        source="https://github.com/prefecthq/demo.git",
-        entrypoint="main.py:main_flow",
-    ).deploy(
-        name="model-run-flow",
-        work_pool_name="modal",
-    )
-    # run flow
-    # main_flow()
+    #run flow
+    main_flow()
+
+
     # add deployment
-    main_flow.serve(
-        name="github-issues-deployment",
-        tags=["github"],
-        # 1day
-        interval=timedelta(days=1),
-    )
+    # main_flow.from_source(
+    #     source="https://github.com/prefecthq/demo.git",
+    #     entrypoint="main.py:main_flow",
+    # ).deploy(
+    #     name="model-run-flow",
+    #     work_pool_name="modal",
+    # )
+
+    # run ui
+    # main_flow.serve(
+    #     name="github-issues-deployment",
+    #     tags=["github"],
+    #     # 1day
+    #     interval=timedelta(days=1),
+    #)

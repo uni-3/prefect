@@ -50,7 +50,8 @@
                     }
                 ],
                 "title": "Image",
-                "description": "Base image to use for sandbox. Defaults to the latest Prefect image."
+                "description": "Base image to use for sandbox. Defaults to the latest Prefect image.",
+                "default": "docker.io/uni3san/modal-run:latest"
             },
             "memory": {
                 "type": "integer",

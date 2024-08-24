@@ -5,3 +5,4 @@ prefect_dbt
 #prefect_duckdb
 python-dotenv
 duckdb>=1.0.0
+cffi

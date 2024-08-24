@@ -9,7 +9,7 @@ from datetime import timedelta
 import os
 
 import databases
-from tasks import load_github, transform 
+from tasks import transform, load_github
 
 dotenv.load_dotenv()
 

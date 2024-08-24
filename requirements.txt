@@ -4,4 +4,4 @@ airbyte>=0.17.0
 prefect_dbt
 #prefect_duckdb
 python-dotenv
-duckdb>1.0.0
+duckdb>=1.0.0

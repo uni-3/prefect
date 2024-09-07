@@ -10,7 +10,7 @@ import os
 
 import databases
 from tasks import transform, load_github
-from . import bq_cache
+from pyairbyte_project import bq_cache
 
 dotenv.load_dotenv()
 

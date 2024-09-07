@@ -4,7 +4,7 @@ import pandas as pd
 
 from prefect.blocks.system import Secret
 
-from . import bq_cache
+#from . import bq_cache
 
 github_access_token = get_secret("GITHUB_PERSONAL_ACCESS_TOKEN")
 if not github_access_token:
@@ -32,8 +32,8 @@ def load_gihtub_issues(repo_name: str, stream_name: str, cache) -> pd.DataFrame 
 
     source.select_streams([stream_name])
 
-    with bq_cache() as cache:
-        result = source.read(cache=cache)
-        if result is None:
-            return
+    #with bq_cache() as cache:
+    result = source.read(cache=cache)
+    if result is None:
+        return
     return result.cache[stream_name].to_pandas()

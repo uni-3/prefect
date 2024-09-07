@@ -10,6 +10,7 @@ import os
 
 import databases
 from tasks import transform, load_github
+from . import bq_cache
 
 dotenv.load_dotenv()
 
@@ -29,6 +30,9 @@ def main_flow():
     # local
     ##cache = ab.get_default_cache()
     # prod
+
+    # with bq_cache() as cache:
+    #     load_data = load_github.github_issues(connector, cache)
     cache = ab_caches.MotherDuckCache(
         api_key=motherduck_token,
         database="my_db",

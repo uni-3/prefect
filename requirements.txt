@@ -1,11 +1,10 @@
 pandas
 airbyte>=0.17
-prefect>=2.0.0
+prefect>=2.20.6
 prefect_dbt
 #prefect_duckdb
 python-dotenv
 #cryptography==42.0.8
 cryptography==37.0
 duckdb>=1.0.0
-pydantic
-fastapi
+pydanti>=2.0.0

@@ -1,6 +1,6 @@
 pandas
 airbyte>=0.17
-prefect>=2.20.6
+prefect==2.20.6
 prefect_dbt
 #prefect_duckdb
 python-dotenv

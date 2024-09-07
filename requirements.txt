@@ -6,3 +6,4 @@ prefect_dbt
 python-dotenv
 cryptography==42.0.8
 duckdb>=1.0.0
+pydantic

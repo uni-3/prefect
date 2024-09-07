@@ -7,4 +7,4 @@ python-dotenv
 #cryptography==42.0.8
 cryptography==37.0
 duckdb>=1.0.0
-pydanti>=2.0.0
+pydantic>=2.0.0

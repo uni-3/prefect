@@ -4,4 +4,5 @@ airbyte>=0.17
 prefect_dbt
 #prefect_duckdb
 python-dotenv
+cryptography==42.0.8
 duckdb>=1.0.0

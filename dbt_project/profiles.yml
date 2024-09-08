@@ -5,8 +5,7 @@ github_analysis:
       type: duckdb
       schema: main 
       #path: './{{ env_var("DUCKDB_DATABASE", "data/staging/data.duckdb") }}'
-      path: 'md:github_analysis'
-
+      path:  "md:my_db?motherduck_token={{env_var('MOTHERDUCK_TOKEN')}}"
 
     prod:
       type: duckdb

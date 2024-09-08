@@ -2,7 +2,6 @@ pandas
 #airbyte>=0.17.3
 #prefect==2.20.6
 airbyte
-prefect
 prefect_dbt
 #prefect_duckdb
 python-dotenv

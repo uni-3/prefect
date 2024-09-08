@@ -56,3 +56,19 @@ deployments:
       finished_job_ttl: 30
       #image: "docker.io/prefecthq/prefect:2-python3.11"
   schedules: []
+- name: docker-test
+  version:
+  tags: []
+  description:
+  entrypoint: main.py:main_flow
+  parameters: {}
+  work_pool:
+    name: on-docker 
+    work_queue_name:
+    job_variables:
+      image:
+        tag: "docker.io/uni3san/modal-run"
+      finished_job_ttl: 30
+      #image: "docker.io/prefecthq/prefect:2-python3.11"
+  schedules: []
+

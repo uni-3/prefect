@@ -4,4 +4,14 @@ github_analysis:
     dev:
       type: duckdb
       schema: main 
-      path: './{{ env_var("DUCKDB_DATABASE", "data/staging/data.duckdb") }}'
+      #path: './{{ env_var("DUCKDB_DATABASE", "data/staging/data.duckdb") }}'
+      path: 'md:github_analysis'
+
+
+    prod:
+      type: duckdb
+      schema: prod_sung
+      path: 'md:jaffle_shop'
+      threads: 16
+      extensions: 
+        - httpfs

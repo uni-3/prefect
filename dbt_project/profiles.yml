@@ -1,16 +1,18 @@
-github_analysis:
+pokemon_analysis:
   target: dev
   outputs:
     dev:
       type: duckdb
       schema: main 
-      #path: './{{ env_var("DUCKDB_DATABASE", "data/staging/data.duckdb") }}'
-      path:  "md:my_db?motherduck_token={{env_var('MOTHERDUCK_TOKEN')}}"
+      path: './{{ env_var("DUCKDB_DATABASE", "data/staging/data.duckdb") }}'
+      extensions: 
+        - httpfs
 
     prod:
       type: duckdb
-      schema: prod_sung
-      path: 'md:jaffle_shop'
+      schema: pokemon_agg
+      #path: 'md:pokemon'
+      path:  "md:dlt_data?motherduck_token={{env_var('MOTHERDUCK_TOKEN')}}"
       threads: 16
       extensions: 
         - httpfs

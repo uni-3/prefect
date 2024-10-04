@@ -3,6 +3,7 @@ pandas
 #prefect==2.20.6
 airbyte
 prefect_dbt
+dlt
 #prefect_duckdb
 python-dotenv
 #cryptography==42.0.5

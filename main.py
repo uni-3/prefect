@@ -2,15 +2,16 @@ import requests
 from prefect import flow, task, Flow, get_run_logger
 from prefect.blocks.system import Secret
 #import airbyte as ab
-from airbyte import caches as  ab_caches
+#from airbyte import caches as  ab_caches
 import dotenv
 
 from datetime import timedelta
 import os
 
-import databases
-from tasks import transform, load_github
-from pyairbyte_project import bq_cache
+#import databases
+#from tasks import transform, load_github
+from tasks import transform, pokemon
+#from pyairbyte_project import bq_cache
 
 dotenv.load_dotenv()
 
@@ -20,27 +21,32 @@ if not secret_block:
 else:
     motherduck_token = secret_block.get()
 
+# dlt env
+import os
+
+os.environ["PIPELINE_NAME__DESTINATION__DESTINATION_NAME__CREDENTIALS__CREDENTIAL_VALUE"] = motherduck_token
+
 @flow(
-    name="count github issues",
+    name="pokemon",
     retries=0, retry_delay_seconds=5, log_prints=True
 )
 def main_flow():
     # TODO swhich db with env
-    connector = databases.get_connection()
+    #connector = databases.get_connection()
     # local
     ##cache = ab.get_default_cache()
     # prod
 
     # with bq_cache() as cache:
     #     load_data = load_github.github_issues(connector, cache)
-    cache = ab_caches.MotherDuckCache(
-        api_key=motherduck_token,
-        database="my_db",
-        schema_name="cache"
-    )
-    #cache = ab.DuckDBCache(db_path=f"md:?motherduck_token={motherduck_token}")
+    # cache = ab_caches.MotherDuckCache(
+    #     api_key=motherduck_token,
+    #     database="my_db",
+    #     schema_name="cache"
+    # )
+    # #cache = ab.DuckDBCache(db_path=f"md:?motherduck_token={motherduck_token}")
     print("start load")
-    load_data = load_github.github_issues(connector, cache)
+    load_data = pokemon.load_task()
     print("loaded")
     #transform_data = transform.transform_data_with_dbt(upstream_tasks=[load_data])
     transform_data = transform.transform_data_with_dbt()

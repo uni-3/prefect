@@ -2,6 +2,7 @@ version: 2
 
 sources:
   - name: raw_data
-    schema: main 
+    #schema: pokemon
     tables:
-      - name: issues
+      - name: pokemon
+      - name: pokemon_species

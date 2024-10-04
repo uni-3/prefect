@@ -10,6 +10,9 @@ create-block:
 update-modal:
 	uv run prefect work-pool update modal --base-job-template ./templates/modal_job_template.json
 
+prefect-login:
+	uv run prefect cloud login
+
 deploy:
 	uv run prefect deploy
 

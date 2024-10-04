@@ -1,8 +1,8 @@
-name: 'github_analysis'
+name: 'pokemon_analysis'
 version: '1.0'
 config-version: 2
-profile: 'github_analysis'
+profile: 'pokemon_analysis'
 
 models:
-  github_analysis:
+  pokemon_analysis:
     +materialized: view

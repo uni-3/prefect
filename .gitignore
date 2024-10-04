@@ -47,3 +47,6 @@ logs/
 
 # data
 data/
+
+# dlt
+secrets.toml

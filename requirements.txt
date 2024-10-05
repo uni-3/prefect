@@ -1,6 +1,6 @@
 pandas
 #airbyte>=0.17.3
-prefect>=3.0.0
+#prefect>=3.0.0
 dlt
 dlt[parquet]
 pyarrow

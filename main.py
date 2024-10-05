@@ -24,7 +24,7 @@ else:
 # dlt env
 import os
 
-os.environ["PIPELINE_NAME__DESTINATION__DESTINATION_NAME__CREDENTIALS__CREDENTIAL_VALUE"] = motherduck_token
+os.environ["POKE__DESTINATION__MOTHERDUCK__CREDENTIALS__PASSWORD"] = motherduck_token
 
 @flow(
     name="pokemon",

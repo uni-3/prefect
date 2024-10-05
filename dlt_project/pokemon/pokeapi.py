@@ -60,7 +60,7 @@ if __name__ == "__main__":
     pipeline = dlt.pipeline(
         pipeline_name='poke',
         destination='motherduck',
-        dataset_name='pokemon',
+        dataset_name='main',
         dev_mode=False,
     )
 

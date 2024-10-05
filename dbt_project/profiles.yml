@@ -10,9 +10,9 @@ pokemon_analysis:
 
     prod:
       type: duckdb
-      schema: pokemon_agg
+      schema: agg
       #path: 'md:pokemon'
-      path:  "md:dlt_data?motherduck_token={{env_var('MOTHERDUCK_TOKEN')}}"
+      path:  "md:pokemon?motherduck_token={{env_var('MOTHERDUCK_TOKEN')}}"
       threads: 16
       extensions: 
         - httpfs

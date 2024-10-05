@@ -14,7 +14,7 @@ def dbt_build_task():
     trigger_dbt_cli_command(
         command="dbt deps",
         profiles_dir=DBT_PROJECT_DIR,
-        project_dir="dbt_project",
+        project_dit=DBT_PROJECT_DIR,
     )
     # DbtCoreOperation(
     #     commands=["dbt deps"],

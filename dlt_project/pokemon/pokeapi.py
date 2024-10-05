@@ -6,7 +6,8 @@ from dlt.sources.helpers import requests
 @dlt.source(max_table_nesting=2)
 def pokemon_species(pokemon_api_url: str):
     # note that we deselect `pokemon_list` - we do not want it to be loaded
-    @dlt.resource(write_disposition="replace", table_name="pokemon", selected=False)
+    @dlt.resource(table_name="pokemon", selected=False,
+                  write_disposition="merge", primary_key="id")
     def pokemon_list():
         """Retrieve a first page of Pokemons and yield it. We do not retrieve all the pages in this example"""
         next_url = pokemon_api_url

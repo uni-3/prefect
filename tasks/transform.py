@@ -11,16 +11,17 @@ DBT_PROJECT_DIR = PROJECT_ROOT / "dbt_project"
 
 @task
 def dbt_build_task():
-    trigger_dbt_cli_command(
-        command="dbt deps",
-        profiles_dir=DBT_PROJECT_DIR,
-        project_dir=DBT_PROJECT_DIR,
-    )
-    # DbtCoreOperation(
-    #     commands=["dbt deps"],
-    #     project_dir="dbt_project",
-    #     profiles_dir="dbt_project",
-    # ).run()
+    # not working
+    # trigger_dbt_cli_command(
+    #     command="dbt deps",
+    #     profiles_dir=DBT_PROJECT_DIR,
+    #     project_dir=DBT_PROJECT_DIR,
+    # )
+    DbtCoreOperation(
+        commands=["dbt deps"],
+        project_dir="dbt_project",
+        profiles_dir="dbt_project",
+    ).run()
 
 @task(retries=0)
 def transform_data_with_dbt() -> str:

@@ -21,10 +21,12 @@ if not secret_block:
 else:
     motherduck_token = secret_block.get()
 
-# dlt env
+# dlt dbt env
 import os
 
 os.environ["POKE__DESTINATION__MOTHERDUCK__CREDENTIALS__PASSWORD"] = motherduck_token
+os.environ["MOTHERDUCK_TOKEN"] = motherduck_token
+
 
 @flow(
     name="pokemon",

@@ -7,7 +7,8 @@ from prefect_dbt.cli.commands import trigger_dbt_cli_command
 @task
 def dbt_build_task():
     trigger_dbt_cli_command(
-        command="dbt deps", project_dir="dbt_project",
+        command="dbt deps", profiles_dir="dbt_project",
+        project_dir="dbt_project",
     )
 
 @task(retries=0)

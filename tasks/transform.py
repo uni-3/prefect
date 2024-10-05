@@ -6,10 +6,15 @@ from prefect_dbt.cli.commands import trigger_dbt_cli_command
 
 @task
 def dbt_build_task():
-    trigger_dbt_cli_command(
-        command="dbt deps", profiles_dir="dbt_project",
+    #trigger_dbt_cli_command(
+        # command="dbt deps", profiles_dir="dbt_project",
+        # project_dir="dbt_project",
+    # )
+    DbtCoreOperation(
+        commands=["dbt deps"],
         project_dir="dbt_project",
-    )
+        profiles_dir="dbt_project",
+    ).run()
 
 @task(retries=0)
 def transform_data_with_dbt() -> str:

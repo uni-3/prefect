@@ -1,0 +1,1 @@
+select * from agg.pokemon_with_ja_names

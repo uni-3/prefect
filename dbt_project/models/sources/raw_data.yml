@@ -5,4 +5,5 @@ sources:
     schema: pokemon
     tables:
       - name: pokemon
-      - name: pokemon_species
+      - name: species
+      - name: species__names

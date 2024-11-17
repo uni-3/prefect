@@ -1,0 +1,5 @@
+# This file was automatically generated
+name: pokemon
+type: motherduck
+options:
+  database: dlt_data

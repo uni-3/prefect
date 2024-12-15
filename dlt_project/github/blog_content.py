@@ -101,7 +101,7 @@ class GitHubMarkdownFetcher:
             return response.text
 
 
-@dlt.resource()
+@dlt.resource(name="blog_content")
 def get_resources(fetcher: GitHubMarkdownFetcher):
     markdown_files = fetcher.get_all_files()
     content = [{"path": m.path, "text": m.content} for m in markdown_files]

@@ -12,7 +12,7 @@ def main_flow():
     setup_credentials()
     print("start load")
     load_data = blog_content.load()
-    print("loaded")
+    print("loaded", load_data)
     # transform_data = transform.transform_data_with_dbt()
 
 

@@ -1,13 +1,10 @@
 from prefect_github import GitHubCredentials
-from prefect_gcp import GcpCredentials
 import base64
 from dataclasses import dataclass
 import requests
 import dlt
-from dlt.sources.rest_api import rest_api_source
-from typing import List, Dict, Optional
+from typing import List,  Optional
 
-base_url = "https://api.github.com"
 owner = "uni-3"
 repo = "gatsby-blog"
 
@@ -20,26 +17,27 @@ class MarkdownFile:
 
 
 class GitHubMarkdownFetcher:
-    def __init__(self, owner: str, repo: str, token: Optional[str] = None):
+    def __init__(self, owner: str, repo: str, path: Optional[str] = "", token: Optional[str] = None):
         """
         GitHubのMarkdownファイルを取得するためのクラス
 
         Args:
             owner: GitHubのユーザー名またはオーガニゼーション名
             repo: リポジトリ名
+            path: 精査するパス
             token: GitHubのパーソナルアクセストークン（オプション）
         """
         self.owner = owner
         self.repo = repo
+        self.path = path
         self.base_url = "https://api.github.com"
         self.headers = {
             "Accept": "application/vnd.github.v3+json"
         }
         if token:
-            # self.headers["Authorization"] = f"token {token}"
             self.headers["Authorization"] = f"Bearer {token}"
 
-    def get_all_files(self, path: str = "content") -> List[MarkdownFile]:
+    def get_all_files(self) -> List[MarkdownFile]:
         """
         指定されたパス以下の全Markdownファイルを一度に取得
 
@@ -64,7 +62,7 @@ class GitHubMarkdownFetcher:
             for item in tree:
                 if (item["type"] == "blob" and
                     item["path"].endswith(".md") and
-                        item["path"].startswith(path)):
+                        item["path"].startswith(self.path)):
 
                     content = self._get_file_content(item["path"])
                     files.append(MarkdownFile(
@@ -104,10 +102,10 @@ class GitHubMarkdownFetcher:
 
 
 @dlt.resource()
-def get_resources(fetcher):
+def get_resources(fetcher: GitHubMarkdownFetcher):
     markdown_files = fetcher.get_all_files()
     content = [{"path": m.path, "text": m.content} for m in markdown_files]
-    return content
+    yield content
 
 
 def main():
@@ -116,18 +114,12 @@ def main():
     fetcher = GitHubMarkdownFetcher(
         owner=owner,
         repo=repo,
+        path="content",
         token=dlt.secrets["sources.rest_api_pipeline.github_source"]
     )
 
     try:
         print(get_resources(fetcher))
-        # docs ディレクトリ以下の全Markdownファイルを取得
-        # markdown_files = fetcher.get_all_files()
-
-        # # 結果を表示
-        # for file in markdown_files:
-        #     print(f"\nFile: {file.path}")
-        #     print(f"Content preview: {file.content[:100]}...")
 
     except Exception as e:
         print(f"エラーが発生しました: {e}")

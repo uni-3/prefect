@@ -3,6 +3,7 @@ pandas
 #prefect>=3.0.0
 dlt
 dlt[parquet]
+dlt[bigquery]
 pyarrow
 #prefect_duckdb
 python-dotenv

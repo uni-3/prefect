@@ -15,3 +15,6 @@ prefect_gcp
 prefect[github]
 dbt-duckdb
 #pydantic>=2.0.0
+
+# lint
+shandy-sqlfmt[jinjafmt]

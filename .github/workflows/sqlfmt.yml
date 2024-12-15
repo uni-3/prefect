@@ -1,0 +1,30 @@
+name: sqlfmt
+
+on:
+  pull_request:
+    paths:
+      - '**.sql'
+
+jobs:
+  static:
+    name: sqlfmt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Repo
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: Install sqlfmt
+        run: pip install shandy-sqlfmt[jinjafmt]
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@v34
+      - name: Run sqlfmt
+        run: sqlfmt --diff ${{ steps.changed-files.outputs.all_changed_files }}
+
+
+

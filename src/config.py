@@ -5,8 +5,8 @@ import dlt
 
 def setup_credentials():
     """prefect secretsの値をdlt.secretsに設定"""
-    dlt.secrets["github_token"] = GitHubCredentials.load(
-        "github-credentials-block")
+    dlt.secrets["sources.rest_api_pipeline.github_source"] = GitHubCredentials.load(
+        "github-credentials-block").token.get_secret_value()
 
     gcp_credentials_block = GcpCredentials.load("free-prefect-cloud")
     info = gcp_credentials_block.service_account_info.get_secret_value()
@@ -17,3 +17,4 @@ def setup_credentials():
 
 if __name__ == "__main__":
     # setup_credentials()
+    pass

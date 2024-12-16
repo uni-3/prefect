@@ -13,7 +13,12 @@
   },
   "customizations": {
     "vscode": {
-      "extensions": ["vscodevim.vim", "ms-python.python"]
+      "extensions": [
+        "vscodevim.vim",
+        "ms-python.python",
+        "yassun7010.vscode-shandy-sqlfmt",
+        "innoverio.vscode-dbt-power-user"
+      ]
     }
   },
   "postCreateCommand": "pip install uv && uv venv && uv pip install -r requirements.txt"

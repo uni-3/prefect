@@ -16,3 +16,16 @@ pokemon_analysis:
       threads: 16
       extensions: 
         - httpfs
+
+blog:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery 
+      location: US
+      schema: blog_info_dev
+
+    prod:
+      type: bigquery 
+      location: US
+      schema: blog_info

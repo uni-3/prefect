@@ -1,8 +1,12 @@
-name: 'pokemon_analysis'
+name: 'transform'
 version: '1.0'
 config-version: 2
 profile: 'pokemon_analysis'
+models:
+  pokemon_analysis:
+    +materialized: view
 
+profile: 'pokemon_analysis'
 models:
   pokemon_analysis:
     +materialized: view

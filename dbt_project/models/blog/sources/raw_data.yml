@@ -1,14 +1,6 @@
 version: 2
 
 sources:
-  - name: raw_data
-    schema: pokemon
-    tables:
-      - name: pokemon
-      - name: species
-      - name: species__names
-      - name: staging
-
   - name: blog_info
     schema: blog_info
     tables:

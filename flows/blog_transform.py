@@ -10,8 +10,7 @@ from prefect import flow
 def main_flow():
     setup_credentials()
     print("start transform")
-    transformed = transform.transform_data_with_dbt(
-        project_dir="dbt_project/projects/blog")
+    transformed = transform.transform_data_with_dbt()
     print("transformed", transformed)
 
 

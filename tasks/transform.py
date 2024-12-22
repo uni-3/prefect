@@ -5,10 +5,10 @@ from prefect_dbt.cli.configs import TargetConfigs
 
 
 @task(retries=0)
-def transform_data_with_dbt(project_dir: str = "dbt_project", configs: TargetConfigs = BigQueryTargetConfigs.load("dbt-free-bigquery")) -> str:
+def transform_data_with_dbt(profile_name: str = "blog", project_dir: str = "dbt_project", configs: TargetConfigs = BigQueryTargetConfigs.load("dbt-free-bigquery")) -> str:
     """dbt実行"""
     dbt_cli_profile = DbtCliProfile(
-        name="blog",
+        name=profile_name,
         target="prod",
         target_configs=configs,
     )
@@ -16,7 +16,7 @@ def transform_data_with_dbt(project_dir: str = "dbt_project", configs: TargetCon
         commands=["dbt run"],
         dbt_cli_profile=dbt_cli_profile,
         project_dir=project_dir,
-        profile_dir="dbt_project",
+        profile_dir=project_dir,
         overwrite_profiles=True
     )
     res = dbt_init.run()

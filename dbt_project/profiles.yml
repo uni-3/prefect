@@ -1,4 +1,4 @@
-pokemon_analysis:
+pokemon:
   target: dev
   outputs:
     dev:
@@ -14,7 +14,7 @@ pokemon_analysis:
       #path: 'md:pokemon'
       path:  "md:dlt_data?motherduck_token={{env_var('MOTHERDUCK_TOKEN')}}"
       threads: 16
-      extensions: 
+      extensions:
         - httpfs
 
 blog:

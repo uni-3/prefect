@@ -1,5 +1,8 @@
 # This file was automatically generated
-name: pokemon
 type: motherduck
+name: pokemon
 options:
   database: dlt_data
+# Advanced Options, you probably don't want to change this
+buildOptions:
+  batchSize: 1000000

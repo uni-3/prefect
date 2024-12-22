@@ -26,7 +26,7 @@
       ]
     }
   },
-  "postCreateCommand": "pip install uv && uv venv && uv pip install -r requirements.txt && uv venv --allow-existing && uv sync && cd dbt_project && uv run dbt deps"
+  "postCreateCommand": "pip install uv && uv venv && uv pip install -r requirements.txt && uv sync && cd dbt_project && uv run dbt deps"
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},
 

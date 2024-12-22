@@ -2,5 +2,5 @@
 name: free
 type: bigquery
 options:
-  location: US
   authenticator: service-account
+  location: US

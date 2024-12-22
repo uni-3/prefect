@@ -1,31 +1,26 @@
 ---
-title: blog viewer
+title: blog dashborad
 
 queries:
-  - content: blog_content.sql
+  - content_len: blog/content_len.sql
   - pv_rank: blog/pv_rank.sql
   - tag_count: blog/tag_count.sql
 ---
 
-```sql content_len 
-  select
-    len_text
-  from free.content
-```
+- 記事文字数の分布
 
 <Histogram
     data={content_len}
     x=len_text
 />
 
+- PV数top10
 
-
-<LineChart 
+<DataTable 
     data={pv_rank.limit(10)}
-    x=page_title
-    y=rank
-    markers=true
 />
+
+- タグごとの
 
 <BarChart 
     data={tag_count}

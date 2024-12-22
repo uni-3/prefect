@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: blog_info
+    schema: blog_info
+    tables:
+      - name: blog_content
+
+  - name: ga
+    schema: analytics_249693159
+    tables:
+      - name: flat_events
+        identifier: flat_events_*
+      - name: events
+        identifier: events_*
+    
+  - name: sc
+    schema: searchconsole
+    tables:
+      - name: url_impression
+        identifier: searchdata_url_impression
+      - name: site_impression
+        identifier: searchdata_site_impression

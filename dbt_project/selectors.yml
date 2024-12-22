@@ -1,0 +1,7 @@
+selectors:
+  - name: my_default_selector
+    description: exclude pokemon models by default
+    default: true
+    definition:
+      method: path
+      value: "models/blog"

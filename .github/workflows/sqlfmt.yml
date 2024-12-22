@@ -1,0 +1,39 @@
+name: sqlfmt
+
+on:
+  pull_request:
+    paths:
+      - '**.sql'
+
+jobs:
+  static:
+    name: sqlfmt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Repo
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: Install sqlfmt
+        run: pip install shandy-sqlfmt[jinjafmt]
+      - name: Get changed files
+        uses: technote-space/get-diff-action@v6
+        with:
+          PATTERNS: |
+            **/*.sql
+      - name: Run sqlfmt
+        run: sqlfmt --diff ${{ env.GIT_DIFF_FILTERED }}
+
+      - name: Auto Commit sqlfmt changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "apply sqlfmt"
+          file_pattern: '**/*.sql'
+          pull_style: rebase
+
+
+

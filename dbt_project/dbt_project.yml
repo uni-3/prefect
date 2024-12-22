@@ -1,8 +1,45 @@
-name: 'pokemon_analysis'
+name: 'main'
 version: '1.0'
 config-version: 2
-profile: 'pokemon_analysis'
+profile: 'blog'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
 
 models:
-  pokemon_analysis:
-    +materialized: view
+  main:
+    blog:
+      # Staging モデル用の設定
+      staging:
+        +materialized: table  # ステージングはビューとして作成
+        +schema: staging    # staging スキーマに作成
+        +schema_suffix: ''
+      
+      # Intermediate モデル用の設定
+      intermediate:
+        +materialized: table
+        +schema: intermediate
+        +schema_suffix: ''
+    
+      # Marts モデル用の設定
+      marts:
+        +materialized: table  # マートはテーブルとして作成
+        +schema: marts       # marts スキーマに作成
+        +schema_suffix: ''
+      
+        #blog:
+        #  +materialized: table  # マートはテーブルとして作成
+        #  +schema: marts
+
+    pokemon:
+      +materialized: view
+      marts:
+        pokemon_analysis:
+        +materialized: view
+
+
+# カスタム変数の設定（必要な場合）
+vars:
+  schema_prefix: 'prod'

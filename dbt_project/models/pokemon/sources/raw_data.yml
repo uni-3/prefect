@@ -7,3 +7,4 @@ sources:
       - name: pokemon
       - name: species
       - name: species__names
+      - name: staging

@@ -1,36 +1,25 @@
-# dbt task
 from prefect import task
-from prefect_dbt.cli.commands import DbtCoreOperation
-from prefect_dbt.cli.commands import trigger_dbt_cli_command
+from prefect_dbt.cli.commands import DbtCoreOperation, DbtCliProfile
+from prefect_dbt.cli.configs.bigquery import BigQueryTargetConfigs
+from prefect_dbt.cli.configs import TargetConfigs
 
-from pathlib import Path
-
-# プロジェクトのルートディレクトリを取得
-PROJECT_ROOT = Path(__file__).parent.parent
-DBT_PROJECT_DIR = PROJECT_ROOT / "dbt_project"
-
-@task
-def dbt_build_task():
-    # not working
-    # trigger_dbt_cli_command(
-    #     command="dbt deps",
-    #     profiles_dir=DBT_PROJECT_DIR,
-    #     project_dir=DBT_PROJECT_DIR,
-    # )
-    DbtCoreOperation(
-        commands=["dbt deps"],
-        project_dir="dbt_project",
-        profiles_dir="dbt_project",
-    ).run()
 
 @task(retries=0)
-def transform_data_with_dbt() -> str:
-    dbt_build_task()
-    res = DbtCoreOperation(
-        commands=["dbt run --target prod"],
-        project_dir="dbt_project",
-        profiles_dir="dbt_project"
-    ).run()
+def transform_data_with_dbt(profile_name: str = "blog", project_dir: str = "dbt_project", configs: TargetConfigs = BigQueryTargetConfigs.load("dbt-free-bigquery")) -> str:
+    """dbt実行"""
+    dbt_cli_profile = DbtCliProfile(
+        name=profile_name,
+        target="prod",
+        target_configs=configs,
+    )
+    dbt_init = DbtCoreOperation(
+        commands=["dbt run"],
+        dbt_cli_profile=dbt_cli_profile,
+        project_dir=project_dir,
+        profile_dir=project_dir,
+        overwrite_profiles=True
+    )
+    res = dbt_init.run()
     return res
 
 

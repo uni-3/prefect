@@ -13,10 +13,20 @@
   },
   "customizations": {
     "vscode": {
-      "extensions": ["vscodevim.vim", "ms-python.python"]
+      "settings": {
+        "python.defaultInterpreterPath": ".venv/bin/python",
+        "editor.renderWhitespace": "all",
+      },
+      "extensions": [
+        "vscodevim.vim",
+        "ms-python.python",
+        "yassun7010.vscode-shandy-sqlfmt",
+        "innoverio.vscode-dbt-power-user",
+        "GitHub.copilot"
+      ]
     }
   },
-  "postCreateCommand": "pip install uv && uv venv && uv pip install -r requirements.txt"
+  "postCreateCommand": "pip install uv && uv venv && uv pip install -r requirements.txt && uv venv --allow-existing && uv sync && cd dbt_project && uv run dbt deps"
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},
 

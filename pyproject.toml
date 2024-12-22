@@ -16,3 +16,8 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["dlt_project"]
 exclude = ["dbt_project", "*.pyc", "data"]
+
+[tool.sqlfmt]
+line_length = 99
+check = true
+exclude=["target/**/*", "dbt_packages/**/*", ".venv/**/*"]

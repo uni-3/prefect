@@ -7,7 +7,6 @@
 
 <EvidenceDefaultLayout
    data={data}
-   title="dashboards"
    logo="/uni-3.jpg"
    githubRepo="https://github.com/uni-3/prefect"
    neverShowQueries=true

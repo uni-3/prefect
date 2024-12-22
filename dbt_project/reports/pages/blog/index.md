@@ -1,5 +1,5 @@
 ---
-title: blog dashborad
+title: blog dashboard
 
 queries:
   - content_len: blog/content_len.sql
@@ -20,7 +20,7 @@ queries:
     data={pv_rank.limit(10)}
 />
 
-- タグごとの
+- タグごとのカウント
 
 <BarChart 
     data={tag_count}

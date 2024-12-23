@@ -1,3 +1,1 @@
-  select
-    len_text
-  from free.content
+select len_text from free.content

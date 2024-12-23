@@ -1,48 +1,33 @@
 ---
-title: pokemon viewer
+title: blog dashboard
+
+queries:
+  - content_len: blog/content_len.sql
+  - pv_rank: blog/pv_rank.sql
+  - tag_count: blog/tag_count.sql
 ---
 
+- 記事文字数の分布
 
-```sql poke_names 
-  select
-    id
-    ,ja_name
-    ,weight
-    ,sprites__front_default as poke_front_img
-    ,sprites__front_shiny as poke_front_shiny_img
-  from pokemon.pokemons
-```
+<Histogram
+    data={content_len}
+    x=len_text
+/>
 
+- PV数top10
 
-<Dropdown
-  data={poke_names}
-  name=ja_name
-  value=ja_name
-  multiple=true
-  title="表示するポケモン"
-  selectAllByDefault=true
->
-</Dropdown>
+<DataTable 
+    data={pv_rank.limit(10)}
+/>
 
-<!-- Selected: {inputs.ja_name.value} -->
+- タグごとのカウント
 
-```sql pokes
-  select
-    id
-    ,ja_name as name
-    ,weight
-    ,sprites__front_default as poke_front_img
-    ,sprites__front_shiny as poke_front_shiny_img
-  from pokemon.pokemons
-  where ja_name in ${inputs.ja_name.value}
-  order by id asc
-```
+<BarChart 
+    data={tag_count}
+    x=created_at
+    y=count
+    series=tag
+    title="count by tag"
+/>
 
-<DataTable data={pokes} search=true>
-  	<Column id=id />
-  	<Column id=poke_front_img title="image" contentType=image width=60px align=center />
-  	<Column id=poke_front_shiny_img title="イロチ" contentType=image width=60px align=center />
-  	<Column id=name />
-  	<Column id=weight />
-</DataTable>
-
+<LastRefreshed/>

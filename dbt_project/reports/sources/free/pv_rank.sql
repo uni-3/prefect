@@ -1,9 +1,8 @@
-SELECT
+select
+    date_truncate(d, month) as month,
     page_title,
-    REGEXP_REPLACE(page_location, '/$', '') as page_location,
-    ROW_NUMBER() OVER (ORDER BY SUM(pv) DESC) AS rank
-  FROM
-    blog_info_marts.pv_in_30days
-  GROUP BY all
-ORDER BY
-  rank ASC
+    regexp_replace(page_location, '/$', '') as page_location,
+    row_number() over (order by sum(pv) desc) as rank
+from blog_info_marts.pv_in_30days
+group by all
+order by rank asc

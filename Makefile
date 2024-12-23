@@ -27,3 +27,6 @@ docker-login:
 
 run-dbt:
 	cd dbt_project && uv run dbt run --target=prod
+
+dbt-deps:
+	cd dbt_project && uv run dbt deps

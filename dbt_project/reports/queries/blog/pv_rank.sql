@@ -1,1 +1,1 @@
-SELECT * from free.pv_rank
+select * from free.pv_rank

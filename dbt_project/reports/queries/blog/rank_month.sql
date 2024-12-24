@@ -14,6 +14,7 @@ with
         select
             month,
             page_title,
+            concat(left(page_title, 10), '...') as page_title_offset,
             page_location,
             row_number() over (partition by month order by total_pv desc) as pv_rank,
             row_number() over (partition by month order by total_imp desc) as imp_rank,

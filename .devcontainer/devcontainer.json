@@ -15,12 +15,11 @@
     "vscode": {
       "settings": {
         "python.defaultInterpreterPath": ".venv/bin/python",
-        "editor.renderWhitespace": "all",
+        "editor.renderWhitespace": "all"
       },
       "extensions": [
         "vscodevim.vim",
         "ms-python.python",
-        "yassun7010.vscode-shandy-sqlfmt",
         "innoverio.vscode-dbt-power-user",
         "GitHub.copilot"
       ]

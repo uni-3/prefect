@@ -1,8 +1,5 @@
 select
-    date_trunc('month', d) as month,
-    sum(pv) as total_pv,
-    sum(impressions) as total_imp,
-    sum(clicks) as total_clicks,
+    date_trunc('month', d) as month, 
     sum(pv)::float / max(sum(pv)) over () as normalized_pv,
     sum(impressions)::float / max(sum(impressions)) over () as normalized_imp,
     sum(clicks)::float / max(sum(clicks)) over () as normalized_clicks

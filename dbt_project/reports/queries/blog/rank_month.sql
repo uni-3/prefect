@@ -21,9 +21,6 @@ with
             row_number() over (
                 partition by month order by total_clicks desc
             ) as click_rank,
-        -- total_pv,
-        -- total_imp,
-        -- total_clicks
         from monthly_data
     )
 select *

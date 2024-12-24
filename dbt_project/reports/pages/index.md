@@ -8,6 +8,7 @@ queries:
   - tag_count: blog/tag_count.sql
   - norm_metrics_month: blog/norm_metrics_month.sql
   - norm_pv_day_of_week: blog/norm_pv_day_of_week.sql
+  - metrics_bubble_chart: blog/metrics_bubble_chart.sql
 ---
 
 
@@ -23,6 +24,7 @@ queries:
         y=c
         labels=true
         markers=true
+        yGridlines=false
         title="記事数推移"
     />
   </Group>
@@ -46,6 +48,22 @@ queries:
 
 
 ### 指標に関するデータ
+
+<BubbleChart
+    title="記事ごとの指標"
+    data={metrics_bubble_chart}
+    x=ctr
+    y=normalized_pv
+    xFmt=num2
+    yFmt=num2
+    sizeFmt=num2
+    yGridlines=false
+    yMax=1.0
+    yMin=0
+    series=page_title
+    size=normalized_imp
+>
+</BubbleChart>
 
 <LineChart 
     data={norm_metrics_month}
@@ -72,7 +90,9 @@ queries:
     data={norm_pv_day_of_week}
     x=day_of_week
     y=normalized_pv
+    yMax=1
     labels=true
+    yGridlines=false
     title="最大を1としたときの曜日別PV数"
     sort=false
 />
@@ -83,13 +103,21 @@ queries:
     y=pv_rank
     yMin=1
     yMax=10
+    yGridlines=false
     series=page_title
     step=true
     markers=true
     showAllLabels=true
     title="ページごとのPV数順位の推移"
-    echartsOptions={{ yAxis: {inverse: true }}}
-/>
+    echartsOptions={{ yAxis: {inverse: true }, tooltip: {show: false}}}
+>
+    <ReferencePoint
+      data={rank_month.where(`pv_rank <= 10`)}
+      x=month
+      y=pv_rank
+      label=page_title_offset labelPosition=right
+    />
+</LineChart>
 
 
 <LastRefreshed/>

@@ -1,5 +1,6 @@
 from prefect import task
 import dlt
+from dlt.destinations.adapters import bigquery_adapter
 
 from dlt_project.github import blog_content
 
@@ -21,9 +22,12 @@ def load():
         pipeline_name='blog_content',
         destination='bigquery',
         dataset_name='blog_info',
-        dev_mode=False,
     )
-    load_info = pipeline.run(blog_content.get_resources(
-        fetcher), loader_file_format="parquet")
+    load_info = pipeline.run(
+        bigquery_adapter(
+            blog_content.get_resources(fetcher),
+            table_description='blog content',
+        )
+    )
 
     print(load_info)

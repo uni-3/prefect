@@ -15,6 +15,7 @@ prefect_gcp
 prefect[github]
 dbt-duckdb
 dbt-bigquery
+dbt-core
 #pydantic>=2.0.0
 
 # lint

@@ -1,0 +1,15 @@
+[runtime]
+log_level="WARNING"
+
+[load]
+workers=3
+
+[pipeline]
+loader_file_format="parquet"
+data_page_size=10e7 # 10MB
+
+
+[destination.bigquery]
+location = "US"
+staging_dataset_name_layout="_dlt_staging"
+

@@ -39,7 +39,7 @@ class GitHubMarkdownFetcher:
         if token:
             self.headers["Authorization"] = f"Bearer {token}"
 
-    def get_all_files(self) -> Generator[MarkdownFile]:
+    def get_all_files(self) -> Generator[dict, None, None]:
         """
         指定されたパス以下の全Markdownファイルを一度に取得
 

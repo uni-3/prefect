@@ -151,7 +151,9 @@ def main():
     )
 
     try:
-        print(get_resources(fetcher))
+        r = get_resources(fetcher)
+
+        print(list(r)[0])
 
     except Exception as e:
         print(f"エラーが発生しました: {e}")

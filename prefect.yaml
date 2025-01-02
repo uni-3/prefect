@@ -44,10 +44,10 @@ deployments:
   version:
   tags: []
   description:
-  entrypoint: main.py:main_flow
+  entrypoint: flows/blog_content.py:main
   parameters: {}
   work_pool:
-    name: modal
+    name: on-modal
     work_queue_name:
     # job_variables:
     #   image:

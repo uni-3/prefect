@@ -34,6 +34,8 @@ run-dbt:
 dbt-deps:
 	cd dbt_project && uv run dbt deps
 
+start-evidence:
+	cd dbt_project/reports && docker compose up -d
 
 help: ## helpです コマンドの後ろに説明を書くとコマンドと説明が表示されます
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \

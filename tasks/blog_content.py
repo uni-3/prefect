@@ -31,5 +31,7 @@ def load() -> dlt.common.pipeline.LoadInfo:
         )
     )
 
-    print("load info", load_info)
+    row_counts = pipeline.last_trace.last_normalize_info.row_counts
+    print(f"row count: {row_counts}")
+
     return load_info

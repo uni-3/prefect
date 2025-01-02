@@ -59,7 +59,7 @@ deployments:
   version:
   tags: []
   description:
-  entrypoint: main.py:main_flow
+  entrypoint: flows/blog_content.py:main_flow
   parameters: {}
   work_pool:
     name: on-docker 

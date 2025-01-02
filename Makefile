@@ -1,3 +1,6 @@
+.PHONY: help
+.DEFAULT_GOAL := help
+
 start-server:
 	prefect server start
 
@@ -30,3 +33,8 @@ run-dbt:
 
 dbt-deps:
 	cd dbt_project && uv run dbt deps
+
+
+help: ## helpです コマンドの後ろに説明を書くとコマンドと説明が表示されます
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
+		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'

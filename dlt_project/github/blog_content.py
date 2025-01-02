@@ -1,9 +1,11 @@
 from prefect_github import GitHubCredentials
 import base64
+import dataclasses
 from dataclasses import dataclass
 import requests
 import dlt
-from typing import List,  Optional
+from typing import Generator, List,  Optional
+from datetime import datetime
 
 owner = "uni-3"
 repo = "gatsby-blog"
@@ -11,9 +13,9 @@ repo = "gatsby-blog"
 
 @dataclass
 class MarkdownFile:
-    name: str
     path: str
     content: str
+    last_modified: datetime
 
 
 class GitHubMarkdownFetcher:
@@ -37,7 +39,7 @@ class GitHubMarkdownFetcher:
         if token:
             self.headers["Authorization"] = f"Bearer {token}"
 
-    def get_all_files(self) -> List[MarkdownFile]:
+    def get_all_files(self) -> Generator[dict, None, None]:
         """
         指定されたパス以下の全Markdownファイルを一度に取得
 
@@ -65,13 +67,13 @@ class GitHubMarkdownFetcher:
                         item["path"].startswith(self.path)):
 
                     content = self._get_file_content(item["path"])
-                    files.append(MarkdownFile(
-                        name=item["path"].split("/")[-1],
+                    last_modified = self._get_file_last_modified(item["path"])
+                    file = MarkdownFile(
                         path=item["path"],
-                        content=content
-                    ))
-
-            return files
+                        content=content,
+                        last_modified=last_modified
+                    )
+                    yield dataclasses.asdict(file)
 
         except requests.exceptions.RequestException as e:
             print(f"Error fetching files: {e}")
@@ -100,12 +102,43 @@ class GitHubMarkdownFetcher:
             response.raise_for_status()
             return response.text
 
+    def _get_file_last_modified(self, file_path: str) -> datetime:
+        """
+        ファイルの最終更新日を取得
 
-@dlt.resource(name="blog_content")
+        Args:
+            file_path: ファイルのパス
+
+        Returns:
+            最終更新日のdatetimeオブジェクト
+        """
+        url = f"{self.base_url}/repos/{self.owner}/{self.repo}/commits"
+        params = {
+            "path": file_path,
+            "per_page": 1  # 最新のコミットのみ取得
+        }
+
+        response = requests.get(url, headers=self.headers, params=params)
+        response.raise_for_status()
+
+        commits = response.json()
+        if commits:
+            # コミットの日時を取得してdatetimeオブジェクトに変換
+            last_modified_str = commits[0]["commit"]["committer"]["date"]
+            return datetime.strptime(last_modified_str, "%Y-%m-%dT%H:%M:%SZ")
+        else:
+            return datetime.min  # コミットが見つからない場合のフォールバック
+
+
+@dlt.resource(
+    name="blog_content",
+    merge_key="last_modified",
+    write_disposition="merge"
+    # write_disposition="replace"
+)
 def get_resources(fetcher: GitHubMarkdownFetcher):
-    markdown_files = fetcher.get_all_files()
-    content = [{"path": m.path, "text": m.content} for m in markdown_files]
-    yield content
+    # print(f"fmarkdown sile, {next(fetcher.get_all_files())}")
+    yield from fetcher.get_all_files()
 
 
 def main():
@@ -119,7 +152,9 @@ def main():
     )
 
     try:
-        print(get_resources(fetcher))
+        r = get_resources(fetcher)
+
+        print(list(r)[0])
 
     except Exception as e:
         print(f"エラーが発生しました: {e}")

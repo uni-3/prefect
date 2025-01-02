@@ -33,13 +33,17 @@ deployments:
   tags: []
   description:
   schedule: {}
-  entrypoint: main.py:main_flow
+  entrypoint: flows/blog_content.py:main
   parameters: {}
   work_pool:
     name: on-prefect
     work_queue_name: primary-queue
     job_variables: 
       finished_job_ttl: 30
+  shedules:
+     - cron: "0 0 * * *"
+       timezone: "Asia/Tokyo"
+       active: true
 - name: modal-test
   version:
   tags: []

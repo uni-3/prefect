@@ -16,7 +16,7 @@ update-modal:
 prefect-login:
 	uv run prefect cloud login
 
-deploy:
+deploy: ## deploy prefect flow
 	uv run prefect deploy
 
 docker-push:
@@ -34,7 +34,7 @@ run-dbt:
 dbt-deps:
 	cd dbt_project && uv run dbt deps
 
-start-evidence:
+start-evidence: ## start evidence
 	cd dbt_project/reports && docker compose up -d
 
 help: ## helpです コマンドの後ろに説明を書くとコマンドと説明が表示されます

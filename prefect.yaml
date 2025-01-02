@@ -40,10 +40,10 @@ deployments:
     work_queue_name: primary-queue
     job_variables: 
       finished_job_ttl: 30
-  shedules:
-     - cron: "0 0 * * *"
-       timezone: "Asia/Tokyo"
-       active: true
+  schedules:
+    - cron: "0 0 * * *"
+      timezone: "Asia/Tokyo"
+      active: true
 - name: modal-test
   version:
   tags: []

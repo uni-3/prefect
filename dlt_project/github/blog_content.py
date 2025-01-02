@@ -134,6 +134,7 @@ class GitHubMarkdownFetcher:
     name="blog_content",
     merge_key="last_modified",
     write_disposition="merge"
+    # write_disposition="replace"
 )
 def get_resources(fetcher: GitHubMarkdownFetcher):
     # print(f"fmarkdown sile, {next(fetcher.get_all_files())}")

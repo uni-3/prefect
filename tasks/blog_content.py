@@ -1,5 +1,6 @@
 from prefect import task
 import dlt
+from dlt.common.pipeline import LoadInfo
 from dlt.destinations.adapters import bigquery_adapter
 
 from dlt_project.github import blog_content
@@ -9,8 +10,8 @@ owner = "uni-3"
 repo = "gatsby-blog"
 
 
-@task(name="load_blog_content")
-def load():
+@task(name="load_blog_content", log_prints=True)
+def load() -> dlt.common.pipeline.LoadInfo:
     fetcher = blog_content.GitHubMarkdownFetcher(
         owner=owner,
         repo=repo,
@@ -30,4 +31,5 @@ def load():
         )
     )
 
-    print(load_info)
+    print("load info", load_info)
+    return load_info

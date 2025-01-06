@@ -1,0 +1,15 @@
+name: Schedule Vercel Deploy
+on:
+  workflow_dispatch:
+  schedule:
+    # run every Monday 00:00 in JST
+    - cron: '0 15 * * 1'
+jobs:
+  build:
+    name: Request Vercel Webhook
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST to Deploy Hook
+        env:
+          BUILD_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: curl -X POST -d {} $BUILD_HOOK

@@ -9,8 +9,6 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
-      #- /usr/src/app/node_modules
     env_file:
       - .env
-    command: >
-      npm run dev
+    command: sh -c "npm run sources && npm run dev"

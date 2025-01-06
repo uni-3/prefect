@@ -31,7 +31,7 @@ queries:
 
   <Histogram
       data={content_len}
-      x=len_text
+      x=len_content
       title="記事の文字数分布"
       fillColor=#b8645e
   />

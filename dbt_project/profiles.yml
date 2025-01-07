@@ -23,9 +23,11 @@ blog:
     dev:
       type: bigquery 
       location: US
-      schema: blog_info_dev
+      method: oauth
+      schema: blog_info
 
     prod:
       type: bigquery 
       location: US
+      method: oauth
       schema: blog_info

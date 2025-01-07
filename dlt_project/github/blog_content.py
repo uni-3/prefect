@@ -132,9 +132,9 @@ class GitHubMarkdownFetcher:
 
 @dlt.resource(
     name="blog_content",
+    primary_key="path",
     merge_key="last_modified",
     write_disposition="merge"
-    # write_disposition="replace"
 )
 def get_resources(fetcher: GitHubMarkdownFetcher):
     # print(f"fmarkdown sile, {next(fetcher.get_all_files())}")

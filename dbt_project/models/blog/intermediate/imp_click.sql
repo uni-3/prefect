@@ -1,10 +1,11 @@
 {{
     config(
-        description="3月以内のサイトごとのimp click.",
+        description="当月含む三ヶ月以内のサイトごとのpv",
     )
 }}
 select
     data_date,
+    
     regexp_replace(url, '/$', '') as url,
     sum(impressions) as impressions,
     sum(clicks) as clicks

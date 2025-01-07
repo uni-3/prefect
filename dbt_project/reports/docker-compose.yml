@@ -8,7 +8,9 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - .:/usr/src/app
+      - .:/app
+      #- host-node-modules:/app/node_modules
+      #- host-evidence:/app/.evidence
     env_file:
       - .env
     command: sh -c "npm run sources && npm run dev"

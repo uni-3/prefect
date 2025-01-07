@@ -1,6 +1,6 @@
 {{
     config(
-        description="3月以内のサイトごとのpv",
+        description="当月含む三ヶ月以内のサイトごとのpv",
     )
 }}
 with
@@ -16,7 +16,7 @@ with
             and _table_suffix
             between format_date(
                 '%Y%m%d',
-                date_add(current_date("Asia/Tokyo"), interval -3 month)
+                date_add(current_date("Asia/Tokyo"), interval -2 month)
             ) and format_date(
                 '%Y%m%d', date_add(current_date("Asia/Tokyo"), interval -1 day)
             )

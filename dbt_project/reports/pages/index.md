@@ -37,7 +37,7 @@ queries:
   />
 
   <BarChart 
-      data={tag_count.where(`count >= 3`)}
+      data={tag_count}
       x=created_at
       y=count
       series=tag
@@ -98,7 +98,7 @@ queries:
 />
 
 <LineChart 
-    data={rank_month.where(`pv_rank <= 10`)}
+    data={rank_month}
     x=month
     y=pv_rank
     yMin=1
@@ -112,7 +112,7 @@ queries:
     echartsOptions={{ yAxis: {inverse: true }, tooltip: {show: false}}}
 >
     <ReferencePoint
-      data={rank_month.where(`pv_rank <= 10`)}
+      data={rank_month}
       x=month
       y=pv_rank
       label=page_title_offset labelPosition=right

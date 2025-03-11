@@ -1,1 +1,0 @@
-select * from agg.poke_with_ja_names

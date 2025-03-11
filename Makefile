@@ -34,9 +34,6 @@ run-dbt: ## run dbt with dbt_project
 dbt-deps: ## install dbt deps
 	cd dbt_project && uv run dbt deps
 
-start-evidence: ## start evidence
-	cd dbt_project/reports && docker compose up -d
-
 help: ## helpです コマンドの後ろに説明を書くとコマンドと説明が表示されます
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'

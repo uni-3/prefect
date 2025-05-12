@@ -34,6 +34,16 @@ run-dbt: ## run dbt with dbt_project
 dbt-deps: ## install dbt deps
 	cd dbt_project && uv run dbt deps
 
+gen-dbt-docs: ## gen dbt docs as static
+	cd dbt_project && uv run dbt docs generate --static
+
+upload-dbt-docs: ## upload to gcs
+	cd dbt_project && gcloud storage cp ./target/static_index.html gs://uni-dbt-docs/
+
+deploy-dbt-docs: ## deploy generated dbt docs
+	# run gen-dbt-docs then upload-dbt-docs
+	make gen-dbt-docs upload-dbt-docs
+
 help: ## helpです コマンドの後ろに説明を書くとコマンドと説明が表示されます
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'

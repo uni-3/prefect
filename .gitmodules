@@ -1,0 +1,3 @@
+[submodule "dbt_project"]
+	path = dbt_project
+	url = https://github.com/uni-3/dbt-bq.git

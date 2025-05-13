@@ -19,6 +19,7 @@ pull:
     repository: https://github.com/uni-3/prefect.git
     branch: main
     #credentials: "{{ prefect.blocks.github-credentials.github-credentials-block }}"
+    include_submodules: true
     access_token: "{{ prefect.blocks.secret.uni3-github-access-token }}"
 - prefect.deployments.steps.pip_install_requirements:
     directory: "{{ clone-step.directory }}"

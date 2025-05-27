@@ -1,3 +1,4 @@
+---
 # .yamllint.yaml
 yaml-files:
   - '*.yaml'
@@ -14,10 +15,10 @@ rules:
     max: 120 # Default is 80, can be adjusted
     level: warning
   trailing-spaces: enable
-  # indentation:
-  #   spaces: 2 # or 4, consistent with project
-  #   indent-sequences: consistent # whether to indent sequences
-  #   check-multi-line-strings: false
+  indentation:
+    spaces: 2
+    indent-sequences: true
+    check-multi-line-strings: false
   new-line-at-end-of-file: enable
   # Braces/Brackets
   # braces:

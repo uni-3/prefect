@@ -1,0 +1,43 @@
+# .github/workflows/yamllint.yml
+name: YAML Lint
+
+on:
+  push:
+    branches:
+      - main # Or your default branch
+      - uni-16 # As per the issue's request for the branch name
+    paths:
+      - '**.yaml'
+      - '**.yml'
+      - '.yamllint'
+  pull_request:
+    paths:
+      - '**.yaml'
+      - '**.yml'
+      - '.yamllint'
+
+jobs:
+  yamllint:
+    name: Run yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x' # Use a Python version compatible with yamllint
+
+      - name: Install yamllint
+        run: pip install yamllint
+
+      - name: Run yamllint with reviewdog
+        uses: reviewdog/action-yamllint@v1
+        with:
+          yamllint_config_path: '.yamllint.yaml' # Path to your yamllint config
+          reporter: github-pr-review # Report issues as review comments
+          fail_on_error: true       # Fail the job if errors are found
+          filter_mode: nofilter     # Show all findings
+          level: warning            # Report warnings and errors
+          yamllint_flags: '--strict' # Optional: add any other yamllint flags

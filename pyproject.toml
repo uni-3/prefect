@@ -17,7 +17,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["SQLAlchemy", "psycopg2"]
+dev = ["SQLAlchemy", "psycopg2", "yamllint>=1.35.1", "shandy-sqlfmt[jinjafmt]>=0.24.0"]
 
 [build-system]
 requires = ["hatchling"]
@@ -31,8 +31,3 @@ exclude = ["dbt_project", "*.pyc", "data"]
 line_length = 99
 check = true
 exclude=["target/**/*", "dbt_packages/**/*", ".venv/**/*"]
-
-[dependency-groups]
-dev = [
-    "shandy-sqlfmt[jinjafmt]>=0.24.0",
-]

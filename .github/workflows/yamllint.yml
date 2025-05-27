@@ -35,9 +35,8 @@ jobs:
       - name: Run yamllint with reviewdog
         uses: reviewdog/action-yamllint@v1
         with:
-          yamllint_config_path: '.yamllint.yaml' # Path to your yamllint config
           reporter: github-pr-review # Report issues as review comments
-          fail_on_error: true       # Fail the job if errors are found
+          fail_level: error         # Fail the job if errors are found
           filter_mode: nofilter     # Show all findings
           level: warning            # Report warnings and errors
-          yamllint_flags: '--strict' # Optional: add any other yamllint flags
+          yamllint_flags: '-c .yamllint.yaml --strict .' # Pass config and target dir

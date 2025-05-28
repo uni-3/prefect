@@ -19,7 +19,7 @@ def estat_source_json(app_id: str = dlt.config.value):
         "statsDataId": statsDataIds["population_estimation"],
         "replaceSpChars": "0",
     }
-    res = requests.get(url=base_url, params=params).json()
+    res = requests.get(url=base_url, params=params, timeout=30).json()
 
     results = res["GET_STATS_DATA"]["STATISTICAL_DATA"]
     cat_info = results["CLASS_INF"]["CLASS_OBJ"]

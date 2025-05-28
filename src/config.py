@@ -1,5 +1,6 @@
 from prefect_gcp import GcpCredentials
 from prefect_github import GitHubCredentials
+from prefect.blocks.system import Secret # Import Secret block
 import dlt
 
 
@@ -13,6 +14,12 @@ def setup_credentials():
     dlt.secrets["destination.bigquery.credentials.project_id"] = info["project_id"]
     dlt.secrets["destination.bigquery.credentials.private_key"] = info["private_key"]
     dlt.secrets["destination.bigquery.credentials.client_email"] = info["client_email"]
+
+    # Add e-stat App ID
+    # Assuming the Prefect Secret block is named 'estat-app-id' and contains the key 'app_id'
+    # The dlt pipeline expects the secret at 'sources.estat_population.app_id'
+    estat_app_id_secret = Secret.load("estat-app-id")
+    dlt.secrets["sources.estat_population.app_id"] = estat_app_id_secret.get()
 
 
 if __name__ == "__main__":

@@ -4,6 +4,7 @@ pandas
 dlt
 dlt[parquet]
 dlt[bigquery]
+requests # Added line
 pyarrow
 #prefect_duckdb
 python-dotenv

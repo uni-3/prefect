@@ -1,47 +1,33 @@
 import dlt
 from dlt.sources.helpers import requests
+# Import the new configuration class(es)
+from dlt_project.estat.dataset_configs import PopulationDatasetConfig 
+# If you add more configs like AnotherDatasetConfig, import them here too.
 
-def _parse_population_data(statistical_data: dict) -> dict:
-    """
-    Parses the STATISTICAL_DATA for population estimation data.
-    Extracts category information and values.
-    """
-    cat_info = statistical_data["CLASS_INF"]["CLASS_OBJ"]
-    values = statistical_data["DATA_INF"]["VALUE"]
-    return {"category": cat_info, "value": values}
-
-ESTAT_CONFIGS = {
-    "population_estimation": {
-        "stats_data_id": "0003443840",
-        "parser": _parse_population_data,
-        "resource_name_suffix": "population" 
-    },
-    # "another_dataset_example": { # Example commented out as not needed now
-    #     "stats_data_id": "ID_FOR_ANOTHER_DATASET",
-    #     "parser": _parse_another_dataset_data, 
-    #     "resource_name_suffix": "another"
-    # },
-}
-
-# The old statsDataIds dictionary is now removed.
+# List of dataset configuration objects
+ESTAT_DATASET_OBJECTS = [
+    PopulationDatasetConfig(),
+    # Add other dataset config objects here, e.g., AnotherDatasetConfig()
+]
 
 @dlt.source(
-    max_table_nesting=1, # Keeping max_table_nesting, adjust if necessary for other datasets
-    name="estat" # Changed to a more generic name
+    max_table_nesting=1,
+    name="estat"
 )
 def estat_source_json(app_id: str = dlt.config.value):
     base_url = "https://api.e-stat.go.jp/rest/3.0/app/json/getStatsData"
 
-    for config_name, config_details in ESTAT_CONFIGS.items():
-        logger = dlt.pipeline(pipeline_name="load_estat").logger # Get a logger instance for context
-        logger.info(f"Processing dataset: {config_name}")
+    for config_object in ESTAT_DATASET_OBJECTS:
+        # Using class name or a potential 'config_name' attribute for logging
+        config_name_for_logging = config_object.__class__.__name__ 
+        logger = dlt.pipeline(pipeline_name="load_estat").logger
+        logger.info(f"Processing dataset: {config_name_for_logging} (ID: {config_object.stats_data_id})")
 
         params = {
             "appId": app_id,
             "lang": "J",
-            "statsDataId": config_details["stats_data_id"],
+            "statsDataId": config_object.stats_data_id, # Use attribute
             "replaceSpChars": "0",
-            # Consider making metaGetFlg, cntGetFlg, etc., configurable per dataset if needed
             "metaGetFlg": "Y",
             "cntGetFlg": "N",
             "explanationGetFlg": "Y",
@@ -51,46 +37,38 @@ def estat_source_json(app_id: str = dlt.config.value):
         
         try:
             res = requests.get(url=base_url, params=params, timeout=30)
-            res.raise_for_status()  # Raise an exception for HTTP errors (4xx or 5xx)
+            res.raise_for_status()
             response_json = res.json()
         except requests.exceptions.RequestException as e:
-            logger.error(f"Error fetching data for {config_name}: {e}")
-            # Decide if to skip this dataset or raise the error / yield an error resource
-            # For now, log and skip
+            logger.error(f"Error fetching data for {config_name_for_logging}: {e}")
             continue 
         except ValueError as e: # Includes JSONDecodeError
-            logger.error(f"Error decoding JSON for {config_name}: {e}")
+            logger.error(f"Error decoding JSON for {config_name_for_logging}: {e}")
             continue
 
-        # Check for API-level errors if the API returns 200 but has an error message
-        # This part is e-stat API specific and might need adjustment based on error formats
         if "GET_STATS_DATA" not in response_json or "STATISTICAL_DATA" not in response_json["GET_STATS_DATA"]:
-            logger.error(f"Unexpected API response structure for {config_name}: {response_json.get('GET_STATS_DATA', {}).get('RESULT', {})}")
+            logger.error(f"Unexpected API response structure for {config_name_for_logging}: {response_json.get('GET_STATS_DATA', {}).get('RESULT', {})}")
             continue
             
         statistical_data = response_json["GET_STATS_DATA"]["STATISTICAL_DATA"]
         
-        # Call the dedicated parser
-        parsed_data = config_details["parser"](statistical_data)
+        # Call the parse method of the config object
+        parsed_data = config_object.parse(statistical_data) 
         
-        resource_suffix = config_details["resource_name_suffix"]
+        resource_suffix = config_object.resource_name_suffix # Use attribute
         
         for key, data_items in parsed_data.items():
-            if data_items is None: # Handle cases where a parser might return None for a key
-                logger.warning(f"No data for '{key}' in dataset '{config_name}'. Skipping resource creation.")
+            if data_items is None:
+                logger.warning(f"No data for '{key}' in dataset '{config_name_for_logging}'. Skipping resource creation.")
                 continue
-            # Generate a dlt resource for each part (e.g., category, value)
-            # The table name in BigQuery will be estat_{resource_suffix}_{key}
             yield dlt.resource(
                 data_items, 
                 name=f"estat_{resource_suffix}_{key}"
             )
 
-def estat_pipeline() -> dlt.Pipeline:
+def estat_pipeline() -> dlt.Pipeline: # This function remains unchanged
     return dlt.pipeline(
         pipeline_name="load_estat",
         destination="bigquery",
         dataset_name="estat_data",
-        # TODO: storage にためる設定↓ https://dlthub.com/docs/dlt-ecosystem/staging#staging-storage
-        # staging='filesystem', # add this to activate the staging location
     )

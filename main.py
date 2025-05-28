@@ -13,10 +13,8 @@ import os
 from tasks import transform, pokemon
 # from pyairbyte_project import bq_cache
 from flows import load_estat_flow # Added import for the new flow
-from src.config import setup_credentials # Added import
 
 dotenv.load_dotenv()
-setup_credentials() # Called the function
 
 secret_block = Secret.load("motheducktoken")
 if not secret_block:

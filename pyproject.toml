@@ -31,3 +31,8 @@ exclude = ["dbt_project", "*.pyc", "data"]
 line_length = 99
 check = true
 exclude=["target/**/*", "dbt_packages/**/*", ".venv/**/*"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+]

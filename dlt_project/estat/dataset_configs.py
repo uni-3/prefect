@@ -1,21 +1,26 @@
+from abc import ABC, abstractmethod
 from typing import Dict, Any
 
-class EstatDatasetConfigBase:
+class EstatDatasetConfigBase(ABC): # Inherit from ABC
     """
-    Base class for e-stat dataset configurations.
-    Subclasses should define class attributes for 'stats_data_id' 
+    Abstract Base Class for e-stat dataset configurations.
+    Subclasses must define class attributes for 'stats_data_id' 
     and 'resource_name_suffix', and implement the 'parse' method.
     """
-    stats_data_id: str
+    stats_data_id: str 
     resource_name_suffix: str
+    # It's good practice to also annotate class variables if you intend them
+    # to be part of the "interface" that subclasses must provide.
+    # However, ABC primarily enforces method implementation.
 
+    @abstractmethod # Decorate parse with @abstractmethod
     def parse(self, statistical_data: Dict[str, Any]) -> Dict[str, Any]:
         """
         Parses the STATISTICAL_DATA part of the API response for this specific dataset.
         Should return a dictionary where keys are table name parts (e.g., "category", "value")
         and values are the data items to be loaded.
         """
-        raise NotImplementedError("Subclasses must implement the 'parse' method.")
+        pass # Abstract methods typically don't have an implementation (or raise NotImplementedError)
 
 
 class PopulationDatasetConfig(EstatDatasetConfigBase):

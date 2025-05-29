@@ -14,7 +14,7 @@ ESTAT_DATASET_OBJECTS: List[EstatDatasetConfigBase] = [
     max_table_nesting=1,
     name="estat"
 )
-def estat_source_json(app_id: str = dlt.config.value) -> Iterable[DltResource]: # KEEP this signature
+def estat_source(app_id: str = dlt.config.value) -> Iterable[DltResource]: # Renamed here
     base_url = "https://api.e-stat.go.jp/rest/3.0/app/json/getStatsData" # REMOVE : str
 
     for config_object in ESTAT_DATASET_OBJECTS:

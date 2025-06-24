@@ -7,7 +7,7 @@ from dlt_project.github import blog_content
 
 
 owner = "uni-3"
-repo = "gatsby-blog"
+repo = "astro-blog"
 
 
 @task(name="load_blog_content", log_prints=True)

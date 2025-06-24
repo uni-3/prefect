@@ -1,5 +1,7 @@
+---
 name: sqlfmt
 
+# yamllint disable-line rule:truthy
 on:
   pull_request:
     paths:
@@ -34,6 +36,3 @@ jobs:
           commit_message: "apply sqlfmt"
           file_pattern: '**/*.sql'
           pull_style: rebase
-
-
-

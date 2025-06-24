@@ -12,6 +12,7 @@ import os
 # from tasks import transform, load_github
 from tasks import transform, pokemon
 # from pyairbyte_project import bq_cache
+from flows import load_estat_flow # Added import for the new flow
 
 dotenv.load_dotenv()
 

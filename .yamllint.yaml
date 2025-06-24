@@ -1,0 +1,44 @@
+---
+# .yamllint.yaml
+yaml-files:
+  - '*.yaml'
+  - '*.yml'
+  - '.yamllint'
+  - '.github/**/*.yaml'
+  - '.github/**/*.yml'
+
+extends: default
+
+rules:
+  # General
+  line-length:
+    max: 120 # Default is 80, can be adjusted
+    level: warning
+  trailing-spaces: enable
+  indentation:
+    spaces: 2
+    indent-sequences: true
+    check-multi-line-strings: false
+  new-line-at-end-of-file: enable
+  # Braces/Brackets
+  # braces:
+  #   min-spaces-inside: 0
+  #   max-spaces-inside: 0
+  #   min-spaces-inside-empty: 0
+  #   max-spaces-inside-empty: 0
+  # brackets:
+  #   min-spaces-inside: 0
+  #   max-spaces-inside: 0
+  #   min-spaces-inside-empty: 0
+  #   max-spaces-inside-empty: 0
+  # Comments
+  comments:
+    require-starting-space: true
+    min-spaces-from-content: 1
+  # Other
+  key-duplicates: enable
+  # truthy:
+  #   allowed-values: ['true', 'false', 'yes', 'no', 'on', 'off'] # customize as needed
+  #   check-keys:
+  #     - ansible # example, for boolean values in ansible
+  #     - travis

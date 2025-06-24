@@ -24,6 +24,7 @@ def load() -> dlt.common.pipeline.LoadInfo:
         pipeline_name='blog_content',
         destination='bigquery',
         dataset_name='blog_info',
+        #refresh='drop_resources',
     )
     load_info = pipeline.run(
         bigquery_adapter(

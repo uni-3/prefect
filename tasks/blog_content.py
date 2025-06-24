@@ -8,6 +8,7 @@ from dlt_project.github import blog_content
 
 owner = "uni-3"
 repo = "astro-blog"
+path = "src/content"
 
 
 @task(name="load_blog_content", log_prints=True)
@@ -15,7 +16,7 @@ def load() -> dlt.common.pipeline.LoadInfo:
     fetcher = blog_content.GitHubMarkdownFetcher(
         owner=owner,
         repo=repo,
-        path="content",
+        path=path,
         token=dlt.secrets["sources.rest_api_pipeline.github_source"]
     )
 

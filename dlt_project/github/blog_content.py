@@ -7,8 +7,6 @@ import dlt
 from typing import Generator, List,  Optional
 from datetime import datetime
 
-owner = "uni-3"
-repo = "gatsby-blog"
 
 
 @dataclass
@@ -142,12 +140,14 @@ def get_resources(fetcher: GitHubMarkdownFetcher):
 
 
 def main():
+    owner = "uni-3"
+    repo = "astro-blog"
     dlt.secrets["sources.rest_api_pipeline.github_source"] = GitHubCredentials.load(
         "github-credentials-block").token.get_secret_value()
     fetcher = GitHubMarkdownFetcher(
         owner=owner,
         repo=repo,
-        path="content",
+        path="src/content/blog",
         token=dlt.secrets["sources.rest_api_pipeline.github_source"]
     )
 

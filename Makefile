@@ -44,6 +44,9 @@ deploy-dbt-docs: ## deploy generated dbt docs
 	# run gen-dbt-docs then upload-dbt-docs
 	make gen-dbt-docs upload-dbt-docs
 
+load-submodule: # submoduleを最新にする
+	git submodule foreach git fetch
+
 help: ## helpです コマンドの後ろに説明を書くとコマンドと説明が表示されます
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'

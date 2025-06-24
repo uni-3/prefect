@@ -2,7 +2,8 @@ import dlt
 from dlt.sources.helpers import requests
 from dlt_project.estat.dataset_configs import PopulationDatasetConfig, EstatDatasetConfigBase
 from typing import List, Dict, Any, Iterable 
-from dlt.pipeline import DltResource 
+#from dlt.pipeline import DltResource 
+from dlt.extract.resource import DltResource 
 from dlt.common.typing import TDataItems
 
 ESTAT_DATASET_OBJECTS: List[EstatDatasetConfigBase] = [

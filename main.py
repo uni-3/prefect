@@ -1,8 +1,6 @@
 import requests
 from prefect import flow, task, Flow, get_run_logger
 from prefect.blocks.system import Secret
-# import airbyte as ab
-# from airbyte import caches as  ab_caches
 import dotenv
 
 from datetime import timedelta
@@ -11,7 +9,6 @@ import os
 # import databases
 # from tasks import transform, load_github
 from tasks import transform, pokemon
-# from pyairbyte_project import bq_cache
 from flows import load_estat_flow # Added import for the new flow
 
 dotenv.load_dotenv()
